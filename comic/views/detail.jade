@@ -1,0 +1,43 @@
+extends master
+
+block content
+  .container(ng-controller="comicDetailController")
+    h2.v-center {{comic.name}}
+    p.lead /// {{comic.name || comic.aliases}}
+
+    p
+      b Name: 
+      | {{comic.name}} // 
+      b Origin:  
+      | {{comic.origin.name}} // 
+    p Publisher: 
+      | {{comic.publisher.name}}
+
+    .row
+      .col-md-12
+        .col-md-4
+          img(src="{{ comic.image.medium_url }}", width="100%")
+        .col-md-8
+          p {{comic.deck}}
+
+
+     p 
+      b Powers
+       ul
+         li.resultList(ng-repeat="power in comic.powers")
+            b {{power.name}} 
+
+    p(ng-show="comic.character_friends.length > 0")
+      b Friends
+        ul
+          li.resultList(ng-repeat="friend in comic.character_friends")
+            b 
+              a(href="character/{{friend.id}}"){{friend.name}}
+
+    p(ng-show="comic.character_enemies.length > 0")
+      b Enemies
+        ul
+          li.resultList(ng-repeat="enemy in comic.character_enemies")
+            b
+              a(href="character/{{enemy.id}}"){{enemy.name}}
+    

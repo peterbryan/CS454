@@ -1,0 +1,48 @@
+extends master
+
+block content
+  .container
+    h2.v-center search
+    p.lead /// find a  comic character by name
+
+    .row(ng-controller="comicController")
+      form.col-md-4
+        .input-group
+          input.form-control.input-md(type="text", ng-model="searchname")
+          span.input-group-btn
+            button.btn.btn-md.btn-warning.pull-right(type="submit", ng-click="searchComics()") search
+        p(ng-show="comic.alternatives.length == null")
+          i.yellow * no character found
+
+        div.more-results-block(ng-show="comic.alternatives.length > 0")
+          p
+            i.span /// more results
+            hr
+          div(ng-repeat="alt in comic.alternatives")
+            p 
+            a(href="#" ng-click="switch(alt)"){{alt.name}}
+              
+
+      .col-md-1
+
+      .col-md-6.movie-block(ng-show="comic.main")
+        .col-md-6
+          img(src="{{ comic.main.image.medium_url }}", width="100%")
+        .col-md-6
+          p
+            h3(style="margin-top: 3px !important") {{comic.name}}
+            p  {{comic.main.name}} | 
+            p  {{comic.main.deck}}
+            a.btn.btn-default(style="width: 100%; margin-top: 10px", href="character/{{comic.main.id}}") Details
+        
+
+          //- button.btn.btn-default(style="width: 100%",ng-click="toggleCast()") {{castBtnText || '+ show cast'}} 
+          //- ul(ng-show="displayCast")
+          //-   li.resultList(ng-repeat="cast in comic.main.abridged_cast")
+          //-     span {{cast.name}}
+
+      //-         button.btn.btn-default(style="width: 100%", ng-click="toggleReview(comic.main.id)") {{reviewBtnText || '+ show review'}} 
+      //-         div(ng-show="displayReview")
+      //-           p.review-block(ng-repeat="review in reviews")
+      //-             span {{review.quote}}
+      //-             span.i.pull-right - {{review.publication}}
